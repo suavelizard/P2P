@@ -1,3 +1,4 @@
+import java.io.File;
 import java.util.Date;
 import java.util.List;
 
@@ -5,13 +6,22 @@ import java.util.List;
  * Created by Zane on 2014-09-26.
  */
 public class SharedFile {
+
+
+    private File file;
     private String fileName;
     private String localFileLocation;
     private int fileSize;
     private String fileHash;
     private Date FileDate;
     private List blocks;
+    public File getFile() {
+        return file;
+    }
 
+    public void setFile(String file) {
+        this.file = new File(file);
+    }
     public String getFileName() {
         return fileName;
     }
@@ -56,6 +66,7 @@ public class SharedFile {
         if (!fileName.equals(null)) {
             this.setFileName(fileName);
             this.setLocalFileLocation(filePath);
+            this.setFile(filePath + fileName);
         }
         this.setFileDate(new Date());
         this.setFileHash(Integer.toString(this.getFileName().hashCode() + this.getLocalFileLocation().hashCode() + this.getFileDate().toString().hashCode()));

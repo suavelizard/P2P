@@ -1,17 +1,13 @@
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+import org.junit.runners.Suite.SuiteClasses;
 
-/**
- * Created by Zane on 2014-09-26.
- */
-public class TestMain {
-    @org.junit.Test
-    public static void main (String[] args){
-        junit.textui.TestRunner.run(suite());
-    }
-    public static Test suite (){
-        TestSuite suite = new TestSuite("All JUnit Tests");
-        suite.addTest(new TestSuite(SharedFileTest.class));
-        return suite;
-    }
+
+@RunWith(Suite.class)
+@SuiteClasses({
+        SharedFileTest.class,
+
+})public class TestMain
+{
+ /* empty class */
 }
