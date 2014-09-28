@@ -9,6 +9,7 @@ public class Peer {
     private String name;
     private int port;
     private List<Peer> peerList;
+    private List<SharedFile> fileList;
     private String peerHash;
 
     public String getPeerHash() {
@@ -91,5 +92,23 @@ public class Peer {
     //remove peer
     public void removePeer(Peer peer){
         this.peerList.remove(peer);
+    }
+
+    public void addSharedDirectory(){
+        //TODO add method
+    }
+    public void addSharedFile(){
+        //TODO add method
+    }
+    public void announce(){
+        //TODO:
+        //broadcase to all clients on network
+        //send out IP and port along with hash and name
+        //log all responses to peerlist
+
+    }
+    public void respondToAnnounce(){
+        //TODO: send out info
+
     }
 }
