@@ -1,4 +1,6 @@
 import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -15,6 +17,7 @@ public class SharedFile {
     private String fileHash;
     private Date FileDate;
     private List<SharedFileBlock> blocks;
+
     public File getFile() {
         return file;
     }
@@ -22,6 +25,7 @@ public class SharedFile {
     public void setFile(String file) {
         this.file = new File(file);
     }
+
     public String getFileName() {
         return fileName;
     }
@@ -62,16 +66,34 @@ public class SharedFile {
         FileDate = fileDate;
     }
 
-    public  SharedFile(String filePath,String fileName) {
+    public SharedFile(String filePath, String fileName) {
         if (!fileName.equals(null)) {
-            System.out.println(filePath+"\\"+fileName);
+            System.out.println(filePath + "\\" + fileName);
             this.setFileName(fileName);
             this.setLocalFileLocation(filePath);
+
             this.setFile(filePath + "\\" + fileName);
+            this.setFileDate(new Date());
+            this.setFileHash(Integer.toString(this.getFileName().hashCode() + this.getLocalFileLocation().hashCode() + this.getFileDate().toString().hashCode()));
         }
-        this.setFileDate(new Date());
-        this.setFileHash(Integer.toString(this.getFileName().hashCode() + this.getLocalFileLocation().hashCode() + this.getFileDate().toString().hashCode()));
+        setBlocks();
 
     }
 
+    public void setBlocks() {
+        //TODO: Get file size
+        //TODO: Divide into blocks
+        //TODO: loop through file adding blocks
+        //TODO: Create list of block
+        Long  fileSizeInBytes = this.file.length();
+        Long numberOfBlocks = fileSizeInBytes / SharedFileBlock.getBlockSize();
+        //This won't work. Large files will kill memory. Going to need to lazy process this
+        //Check the code here instead: http://www.coderanch.com/t/433429/java/java/peer-peer-network-java
+//        System.out.println("Number of Blocks in " + this.fileName + " is " + numberOfBlocks);
+//        this.blocks = new ArrayList<SharedFileBlock>(numberOfBlocks+1);
+//        for(int i = 1; i < numberOfBlocks; i++){
+//
+//        }
+
+    }
 }
