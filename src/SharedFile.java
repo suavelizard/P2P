@@ -14,7 +14,7 @@ public class SharedFile {
     private int fileSize;
     private String fileHash;
     private Date FileDate;
-    private List blocks;
+    private List<SharedFileBlock> blocks;
     public File getFile() {
         return file;
     }
@@ -62,16 +62,16 @@ public class SharedFile {
         FileDate = fileDate;
     }
 
-    public SharedFile SharedFile(String fileName, String filePath) {
+    public  SharedFile(String filePath,String fileName) {
         if (!fileName.equals(null)) {
+            System.out.println(filePath+"\\"+fileName);
             this.setFileName(fileName);
             this.setLocalFileLocation(filePath);
-            this.setFile(filePath + fileName);
+            this.setFile(filePath + "\\" + fileName);
         }
         this.setFileDate(new Date());
         this.setFileHash(Integer.toString(this.getFileName().hashCode() + this.getLocalFileLocation().hashCode() + this.getFileDate().toString().hashCode()));
 
-        return this;
     }
 
 }

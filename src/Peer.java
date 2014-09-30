@@ -1,6 +1,6 @@
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-
 /**
  * Created by Zane on 2014-09-26.
  */
@@ -55,6 +55,7 @@ public class Peer {
     //constuctor
     public Peer(int port, String ip, String name){
         this.peerList = new ArrayList<Peer>();
+        this.fileList = new ArrayList<SharedFile>();
         this.setPort(port);
         this.setIp(ip);
         this.setName(name);
@@ -62,29 +63,25 @@ public class Peer {
 
         //create socket
         //add self to peer list
-        addPeer(this);
-        System.out.println(this.getName() +"'s peer list: ");
-        for (Peer listPeer: this.getPeerList()){
-            System.out.println("\t"+listPeer.getName());
-        }
+        //addPeer(this);
+        //System.out.println(this.getName() +"'s peer list: ");
+        //for (Peer listPeer: this.getPeerList()){
+        //  System.out.println("\t"+listPeer.getName());
+        //}
     }
     private String hashPeer(){
         return Integer.toString(this.getName().hashCode() +
                 this.getIp().hashCode() + Integer.toString(this.getPort()).hashCode());
     }
     public boolean isPeerInList(Peer peer){
-        boolean b = false;
-        for(Peer listPeer: this.getPeerList()){
-            if(listPeer.getPeerHash().equals(peer.getPeerHash())){
-                return true;
-            }
-        }
-        return b;
+
+        return this.peerList.contains(peer);
     }
     //add peer to peerlist
     public void addPeer(Peer peer){
-        if(!isPeerInList(peer)){
+        if (!isPeerInList(peer)) {
             this.peerList.add(peer);
+            System.out.println("Peer added to list");
         } else {
             System.out.println("Peer is already in list!");
         }
@@ -97,8 +94,9 @@ public class Peer {
     public void addSharedDirectory(){
         //TODO add method
     }
-    public void addSharedFile(){
-        //TODO add method
+    public void addSharedFile(SharedFile sf){
+        this.fileList.add(sf);
+        System.out.println(sf.getFileName() + " added to " + this.name +"'s file list");
     }
     public void announce(){
         //TODO:
@@ -110,5 +108,19 @@ public class Peer {
     public void respondToAnnounce(){
         //TODO: send out info
 
+    }
+
+    public void printPeerList(){
+        System.out.println(this.getName() +"'s peer list: ");
+        for (Peer listPeer: this.getPeerList()){
+            System.out.println("\t"+listPeer.getName());
+        }
+    }
+
+    public void printSharedFileList(){
+        System.out.println(this.name);
+        for(SharedFile sharedfile : this.fileList){
+            System.out.println("\t" + sharedfile.getFileName() + "(" + sharedfile.getFileHash() + ")");
+        }
     }
 }
