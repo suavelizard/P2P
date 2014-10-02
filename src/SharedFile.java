@@ -9,11 +9,10 @@ import java.util.List;
  */
 public class SharedFile {
 
-
     private File file;
     private String fileName;
     private String localFileLocation;
-    private int fileSize;
+    private Long fileSize;
     private String fileHash;
     private Date FileDate;
     private List<SharedFileBlock> blocks;
@@ -42,11 +41,11 @@ public class SharedFile {
         this.localFileLocation = localFileLocation;
     }
 
-    public int getFileSize() {
+    public Long getFileSize() {
         return fileSize;
     }
 
-    public void setFileSize(int fileSize) {
+    public void setFileSize(Long fileSize) {
         this.fileSize = fileSize;
     }
 
@@ -71,19 +70,23 @@ public class SharedFile {
             System.out.println(filePath + "\\" + fileName);
             this.setFileName(fileName);
             this.setLocalFileLocation(filePath);
-
-            this.setFile(filePath + "\\" + fileName);
             this.setFileDate(new Date());
             this.setFileHash(Integer.toString(this.getFileName().hashCode() + this.getLocalFileLocation().hashCode() + this.getFileDate().toString().hashCode()));
         }
-        setBlocks();
+        //setBlocks();
 
+    }
+
+    public void loadFile(){
+        //This is seperate from the constructor in an attempt to save memory. Only load the file when its needed.
+        this.setFile(this.localFileLocation + "\\" + this.fileName);
+        this.fileSize = this.file.length();
     }
 
     public void setBlocks() {
         //TODO: Get file size
         //TODO: Divide into blocks
-        //TODO: loop through file adding blocks
+        //TODO: Loop through file adding blocks
         //TODO: Create list of block
         Long  fileSizeInBytes = this.file.length();
         Long numberOfBlocks = fileSizeInBytes / SharedFileBlock.getBlockSize();
@@ -94,6 +97,5 @@ public class SharedFile {
 //        for(int i = 1; i < numberOfBlocks; i++){
 //
 //        }
-
     }
 }

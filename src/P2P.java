@@ -26,6 +26,8 @@ public class P2P {
         Peer peer2 = new Peer(9264,"127.0.0.1","peer2");
         Peer peer3 = new Peer(9264,"127.0.0.1","peer3");
 
+       // peer1.announce();
+
         peer1.addPeer(peer2);
         peer1.addPeer(peer3);
 

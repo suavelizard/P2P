@@ -1,16 +1,21 @@
 import java.io.File;
+import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 /**
  * Created by Zane on 2014-09-26.
  */
 public class Peer {
+    private static final int DEFAULT_PORT = 9264;
     private String ip = "";
     private String name;
-    private int port;
+    private int port = DEFAULT_PORT;
     private List<Peer> peerList;
     private List<SharedFile> fileList;
     private String peerHash;
+    private String peerID;
 
     public String getPeerHash() {
         return peerHash;
@@ -98,17 +103,48 @@ public class Peer {
         this.fileList.add(sf);
         System.out.println(sf.getFileName() + " added to " + this.name +"'s file list");
     }
-    public void announce(){
+    public void respondToAnnounce(){
+       //TODO respond to announce
+    }
+    //MESSAGES
+    public void announce() {
         //TODO:
-        //broadcase to all clients on network
+        //broadcast to all clients on network
         //send out IP and port along with hash and name
         //log all responses to peerlist
-
+        Thread broadcastThread = new Thread();
+        for (int i = 0; i < 255; i++) {
+//            ip[3] = (byte)i;
+            String localNet = this.ip.substring(0, this.ip.lastIndexOf(".")+1);
+            try {
+                InetAddress address = InetAddress.getByName(localNet + i );//+ ":" + this.port);
+                if (address.isReachable(500)) {
+                    System.out.println("can b pinged");
+                } else if (!address.getHostAddress().equals(address.getHostName())) {
+                    System.out.println("Name is......" + address.getHostName() + "\tIP is......." + address.getHostAddress());
+                } else {
+                    System.out.println("nothing from " +localNet+i);
+                }
+            } catch (UnknownHostException uhe) {
+                uhe.printStackTrace();
+            } catch (IOException ioe) {
+                ioe.printStackTrace();
+            }
+        }
     }
-    public void respondToAnnounce(){
-        //TODO: send out info
-
+    public void copyRouteTable(){
+        //TODO: copy route table
     }
+
+    public void leave(){
+        //TODO: leave network
+    }
+
+    public void findClosestNeighbour(){
+        //TODO: find closest neighbour
+    }
+
+    //END MESSAGES
 
     public void printPeerList(){
         System.out.println(this.getName() +"'s peer list: ");
@@ -123,4 +159,20 @@ public class Peer {
             System.out.println("\t" + sharedfile.getFileName() + "(" + sharedfile.getFileHash() + ")");
         }
     }
+
+    public void sendFileRequestPacket(){
+        //TODO: sendfilerequestpacket
+    }
+
+    //Get the requested file
+    public SharedFile getSharedFileByHash(String fileHash){
+        SharedFile sf = null;
+        for (SharedFile sharedFile: this.fileList){
+            if(sharedFile.equals(fileHash)){
+                sf = sharedFile;
+            }
+        }
+        return sf;
+    }
+
 }
