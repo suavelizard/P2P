@@ -111,7 +111,7 @@ public class Peer {
         //TODO:
         //broadcast to all clients on network
         //send out IP and port along with hash and name
-        //log all responses to peerlist
+        //TODO: thread connections
         Thread broadcastThread = new Thread();
         for (int i = 0; i < 255; i++) {
 //            ip[3] = (byte)i;
@@ -120,6 +120,11 @@ public class Peer {
                 InetAddress address = InetAddress.getByName(localNet + i );//+ ":" + this.port);
                 if (address.isReachable(500)) {
                     System.out.println("can b pinged");
+                    //TODO: spawn connection thread
+                    //TODO: attempt connection
+                    //TODO: copy peerlist
+                    //this.peerList = peerListResppnseFromConnection;
+
                 } else if (!address.getHostAddress().equals(address.getHostName())) {
                     System.out.println("Name is......" + address.getHostName() + "\tIP is......." + address.getHostAddress());
                 } else {

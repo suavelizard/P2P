@@ -1,7 +1,9 @@
+import GUI.*;
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
 
 /**
  * Created by Zane on 2014-09-26.
@@ -21,6 +23,9 @@ public class P2P {
 //        for(int i = 0; i < 5; i++){
 //            peers.add(new Peer(9264,"127.0.0.1",Integer.toString(rand.nextInt(Integer.MAX_VALUE))));
 //        }
+
+        GUI mainUI = new GUI( "Torrential" );
+        mainUI.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         Peer peer1 = new Peer(9264,"127.0.0.1","peer1");
         Peer peer2 = new Peer(9264,"127.0.0.1","peer2");
